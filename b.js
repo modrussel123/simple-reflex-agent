@@ -6,7 +6,7 @@ function reflexAgent(mood) {
         angry: "Frown"
     };
 
-    // cetermine  action based on mood
+    // determine  action based on mood
     const action = moodAction[mood] || "No specific action";
     displayResponse(action);
     displayImage(mood);
