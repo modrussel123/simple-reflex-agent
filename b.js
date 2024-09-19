@@ -1,64 +1,60 @@
-function submit()
-{
-    const mood = document.getElementById("mood").value.toLowerCase();
+function reflexAgent(mood) {
+    // define mood-action mappings
+    const moodAction = {
+        happy: "Smile",
+        sad: "Cry",
+        angry: "Frown"
+    };
 
-    const moodAction ={
-        happy:"Smile",
-        sad:"Cry",
-        angry:"Frown"
-    }
-
+    // cetermine  action based on mood
     const action = moodAction[mood] || "No specific action";
+    displayResponse(action);
+    displayImage(mood);
+}
 
-
+function displayResponse(action) {
     const responseElement = document.getElementById("response");
-    const imageContainer1 = document.getElementById("imageContainer");
-
-    document.getElementById("response").innerHTML=`The agent suggests: ${action}`;
-
-
-imageContainer.innerHTML='';
-if(mood==='happy')
-{
-    const img = document.createElement('img');
-    img.src='happy.gif';
-    img.alt='Smile';
-    img.style.width='450px';
-    img.style.height='250px';
-    imageContainer.appendChild(img);
-
+    responseElement.innerHTML = `The agent suggests: ${action}`;
 }
 
-else if(mood==='sad')
-{
+function displayImage(mood) {
+    const imageContainer = document.getElementById("imageContainer");
+    imageContainer.innerHTML = ''; // clear previous image
+
     const img = document.createElement('img');
-    img.src='crying.gif';
-    img.alt='Cry';
-    img.style.width='450px';
-    img.style.height='250px';
-    imageContainer.appendChild(img);
+    img.style.width = '450px';
+    img.style.height = '250px';
 
-}
-
-else if (mood==='angry')
-{
-    const img = document.createElement('img');
-    img.src='angry.gif';
-    img.alt='Frown';
-    img.style.width='450px';
-    img.style.height='250px';
-    imageContainer.appendChild(img);
-}
-
-else 
-    {
-        const img = document.createElement('img');
-        img.src='question.png';
-        img.alt='No action';
-        img.style.width='450px';
-        img.style.height='250px';
-        imageContainer.appendChild(img);
+    switch(mood) {
+        case 'happy':
+            img.src = 'happy.gif';
+            img.alt = 'Smile';
+            break;
+        case 'sad':
+            img.src = 'crying.gif';
+            img.alt = 'Cry';
+            break;
+        case 'angry':
+            img.src = 'angry.gif';
+            img.alt = 'Frown';
+            break;
+        default:
+            img.src = 'question.png';
+            img.alt = 'No action';
     }
 
-    
+    imageContainer.appendChild(img);
 }
+
+function submit() {
+    const mood = document.getElementById("mood").value.toLowerCase();
+    reflexAgent(mood); // call  reflex agent function
+}
+
+//  enter key
+document.getElementById('mood').addEventListener('keydown', function(event) {
+    if (event.key === 'Enter') {
+        event.preventDefault();
+        submit();
+    }
+});
